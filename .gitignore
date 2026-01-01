@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Prisma generated client 
+src/generated/prisma/
+
+# OS files
+.DS_Store
+
