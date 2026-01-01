@@ -37,17 +37,11 @@ prisma/
 
 Setup & Installation
 Clone Repository
-git clone https://github.com/username/api-blogspot.git
+git clone https://github.com/fajarashari-coder/api-blogspot.git
 cd api-blogspot
 
 Install Dependencies
 npm install
-
-Environment Variables
-
-Buat file .env:
-
-DATABASE_URL="mysql://root@localhost:3306/db-blogspot"
 
 Prisma Setup
 npx prisma migrate dev
