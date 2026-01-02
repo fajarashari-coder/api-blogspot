@@ -1,27 +1,7 @@
 import prisma from "../config/prisma.js";
-import schemaPost from "../schema/schema.js";
 
-export const updatePost = async (req, res) => {
+const updatePost = async (req, res) => {
   try {
-    const { id } = req.params;
-    const parseid = parseInt(id);
-    if (isNaN(parseid)) {
-      return res.status(400).json({
-        success: false,
-        message: "you must enter the number",
-      });
-    }
-    const parse = schemaPost.safeParse(req.body);
-    if (!parse.success) {
-      const errorMassage = parse.error.issues.map(
-        (err) => `${err.path} - ${err.message}`
-      );
-      return res.status(422).json({
-        success: false,
-        message: errorMassage,
-        data: null,
-      });
-    }
     const findunique = await prisma.post.findUnique({
       where: {
         id: parseid,
@@ -57,5 +37,4 @@ export const updatePost = async (req, res) => {
     });
   }
 };
-
 export default updatePost;

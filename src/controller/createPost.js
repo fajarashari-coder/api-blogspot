@@ -1,25 +1,27 @@
 import prisma from "../config/prisma.js";
-import schemaPost from "../schema/schema.js";
+import slugify from "slugify";
 
-export const createpost = async (req, res) => {
+const createpost = async (req, res) => {
   try {
-    const parse = schemaPost.safeParse(req.body);
-    if (!parse.success) {
-      const errormessages = parse.error.issues.map(
-        (err) => `${err.path} - ${err.message}`
-      );
-      return res.status(422).json({
-        success: false,
-        message: errormessages,
-        data: null,
-      });
+    const { title } = req.body;
+    let slug = slugify(title, {
+      replacement: "-",
+      lower: true,
+      remove: /[*+~.()'"!:@]/g,
+    });
+    const unique = await prisma.post.findUnique({
+      where: { slug: slug },
+    });
+    if (unique) {
+      slug += "-" + Date.now();
     }
     const post = await prisma.post.create({
       data: {
-        title: parse.data.title,
-        content: parse.data.content,
-        published: parse.data.published,
-        author_name: parse.data.author_name,
+        title: req.body.title,
+        content: req.body.content,
+        published: req.body.published,
+        author_name: req.body.author_name,
+        slug: slug,
       },
     });
     return res.status(201).json({
@@ -35,5 +37,4 @@ export const createpost = async (req, res) => {
     });
   }
 };
-
 export default createpost;

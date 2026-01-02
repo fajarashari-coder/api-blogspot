@@ -17,6 +17,7 @@ datasource db {
 model post {
   id Int @id @default(autoincrement())
   title String @db.VarChar(255)
+slug String? @unique @db.VarChar(255)
   content String @db.LongText
   published Boolean @default(false)
   author_name String @db.VarChar(255)

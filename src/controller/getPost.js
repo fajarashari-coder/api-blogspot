@@ -1,6 +1,5 @@
 import prisma from "../config/prisma.js";
-
-export const getPostController = async (req, res) => {
+const getPostController = async (req, res) => {
   try {
     const getPost = await prisma.post.findMany();
     return res.status(200).json({
@@ -16,3 +15,4 @@ export const getPostController = async (req, res) => {
     });
   }
 };
+export default getPostController;

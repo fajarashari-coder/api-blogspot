@@ -1,16 +1,7 @@
 import prisma from "../config/prisma.js";
 
-export const deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
   try {
-    const { id } = req.params;
-    const parseid = parseInt(id);
-    if (isNaN(parseid)) {
-      return res.status(400).json({
-        success: false,
-        message: "you must enter the number",
-      });
-    }
-
     const idQuerry = await prisma.post.findUnique({
       where: {
         id: parseid,
@@ -40,5 +31,4 @@ export const deletePost = async (req, res) => {
     });
   }
 };
-
 export default deletePost;
